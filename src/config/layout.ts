@@ -150,7 +150,7 @@ export const LABELS: LabelDef[] = [
   // Each x matches its item; y floats ~0.12 above the item's top; z is nudged forward toward the camera.
   { id: 'lblComputer', text: 'Who I Am', position: [-2.05, 1.86, -2.30], rotation: [0, 0, 0], size: 0.05, depth: 0.013, light: false, onlyInZone: 'desk' },
   { id: 'lblPhoto', text: 'Biography', position: [-1.42, 2.07, -2.18], rotation: [0, 0, 0], size: 0.05, depth: 0.013, light: false, onlyInZone: 'desk' },
-  { id: 'lblResume', text: 'Résumé', position: [-0.80, 1.90, -2.18], rotation: [0, 0, 0], size: 0.05, depth: 0.013, light: false, onlyInZone: 'desk' },
+  { id: 'lblResume', text: 'Résumé', position: [-0.80, 2.06, -2.18], rotation: [0, 0, 0], size: 0.05, depth: 0.013, light: false, onlyInZone: 'desk' },
   { id: 'lblNameplate', text: 'Contact Me', position: [-0.18, 1.66, -2.30], rotation: [0, 0, 0], size: 0.05, depth: 0.013, light: false, onlyInZone: 'desk' },
 
   // Small floating sub-headers above each Work Portfolio item — ONLY shown when zoomed into the work zone
