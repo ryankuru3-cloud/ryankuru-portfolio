@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gifted — section preview</title>
+<!--
+  Static preview of the Gifted portfolio section (src/components/GiftedSection/GiftedSection.tsx +
+  .css), shown inside a mock of the Reader card so it reads exactly as it will in the site. Demo
+  rooms are in their placeholder ("Demo coming soon") state. This is a viewing aid — the live
+  component is the source of truth.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet" />
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; height: 100%; }
+  body { background:
+      radial-gradient(1200px 700px at 70% -10%, #16233c, transparent 60%),
+      #0a0d12;
+    padding: 16px; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
+  /* mock of the Reader card so spacing/feel match the real panel */
+  .reader-panel { position: relative; height: calc(100vh - 32px); width: 100%; max-width: 1600px;
+    margin: 0 auto; overflow: hidden; border: 1px solid rgba(255,255,255,.12);
+    background: rgba(10,13,18,.85); box-shadow: 0 40px 120px -40px rgba(0,0,0,.8); }
+  .mock-close { position: absolute; right: 16px; top: 16px; z-index: 40; width: 36px; height: 36px;
+    display: grid; place-items: center; color: rgba(255,255,255,.85); border: 1px solid rgba(255,255,255,.15);
+    background: rgba(0,0,0,.35); backdrop-filter: blur(6px); font-size: 18px; }
+
+  /* ===== scoped section styles — copied from src/components/GiftedSection/GiftedSection.css ===== */
+  .gifted {
+    --navy:#0C234B; --navy2:#15294d; --midnight:#001C48; --red:#AB0520;
+    --accent:#1E5288; --oasis:#378DBD; --sky:#81D3EB; --ink:#26324d; --muted:#5d6a85;
+    --line:rgba(12,35,75,.11); --bg:#ffffff; --surface:#eef2f6; --cool:#E2E9EB;
+    position: relative; height: 100%; background: var(--bg); color: var(--ink);
+    font-family: 'Inter', system-ui, Arial, sans-serif; line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  .gifted * { box-sizing: border-box; }
+  .gifted a { color: inherit; text-decoration: none; }
+  .gifted-scroll { position: absolute; inset: 0; overflow-x: hidden; overflow-y: auto; scroll-behavior: smooth; }
+  .gifted .container { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+  .gifted .intro { padding: 74px 0 56px; background:
+    radial-gradient(1100px 380px at 82% -8%, rgba(30,82,136,.07), transparent 60%), var(--bg); }
+  .gifted .kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  .gifted .kicker .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
+  .gifted .h-sec { font-family: 'Source Serif 4', Georgia, serif; font-weight: 600; font-size: 44px;
+    line-height: 1.07; letter-spacing: -.018em; color: var(--navy); margin: 16px 0 0; max-width: 17ch; }
+  .gifted .h-sec .thin { color: var(--accent); }
+  .gifted .paccent { width: 54px; height: 3px; background: var(--red); margin: 18px 0 0; border-radius: 2px; }
+  .gifted .lede { font-size: 17.5px; color: var(--ink); max-width: 68ch; margin: 26px 0 0; }
+  .gifted .lede.sub { font-size: 16.5px; color: var(--muted); margin-top: 18px; }
+  .gifted .lede b, .gifted .lede .wm { color: var(--navy); font-weight: 700; }
+
+  .gifted .stage { position: relative; color: #fff; overflow: hidden;
+    background:
+      radial-gradient(120% 90% at 50% 0%, rgba(38,72,128,.55), transparent 60%),
+      linear-gradient(160deg, #15294d 0%, #0C234B 48%, #001C48 100%);
+    background-color: #0C234B; }
+  .gifted .stage:before { content:""; position:absolute; inset:0; pointer-events:none;
+    background: radial-gradient(60% 55% at 50% 40%, rgba(129,211,235,.18), rgba(55,141,189,.07) 45%, transparent 72%); }
+  .gifted .stage-in { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; padding: 52px 28px 60px; }
+  .gifted .stage-tag { display: flex; align-items: center; gap: 10px; justify-content: center; font-size: 11.5px;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--sky); font-weight: 600; margin: 0 0 30px; }
+  .gifted .stage-tag .ln { width: 26px; height: 1px; background: rgba(129,211,235,.5); }
+
+  .gifted .rooms { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; max-width: 860px; margin: 0 auto; }
+  .gifted .room { display: flex; flex-direction: column; border-radius: 16px; overflow: hidden;
+    background: rgba(10,20,40,.55); border: 1px solid rgba(129,211,235,.22);
+    box-shadow: 0 30px 70px -38px rgba(0,12,40,.9);
+    transition: transform .5s cubic-bezier(.2,.7,.2,1), border-color .3s, box-shadow .5s; }
+  .gifted .room:hover { transform: translateY(-7px); border-color: rgba(129,211,235,.55);
+    box-shadow: 0 40px 80px -36px rgba(0,12,40,1); }
+  .gifted .room.soon { cursor: default; }
+  .gifted .room-art { position: relative; aspect-ratio: 16/10; display: grid; place-items: center; overflow: hidden;
+    background:
+      radial-gradient(120% 120% at 50% 0%, rgba(55,141,189,.32), transparent 62%),
+      linear-gradient(160deg, #16335f 0%, #0b1d3e 100%);
+    background-color: #102a52; }
+  .gifted .room-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform .9s cubic-bezier(.2,.7,.2,1); }
+  .gifted .room:hover .room-art img { transform: scale(1.05); }
+  .gifted .room-ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .gifted .room-ico { color: var(--sky); opacity: .92; }
+  .gifted .room-ico svg { width: 74px; height: 74px; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+  .gifted .room:hover .room-ico svg { transform: translateY(-3px) scale(1.05); }
+  .gifted .room-badge { position: absolute; top: 12px; left: 12px; z-index: 3; font-size: 10.5px; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--sky); background: rgba(12,35,75,.7);
+    border: 1px solid rgba(129,211,235,.28); padding: 4px 9px; border-radius: 20px; backdrop-filter: blur(4px); }
+  .gifted .room-body { padding: 20px 22px 22px; }
+  .gifted .room-name { font-family: 'Source Serif 4', Georgia, serif; font-weight: 600; font-size: 22px; color: #fff;
+    margin: 0; letter-spacing: -.01em; }
+  .gifted .room-blurb { font-size: 14px; color: #aebfdb; margin: 8px 0 0; line-height: 1.55; }
+  .gifted .room-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 11.5px;
+    font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--sky); }
+  .gifted .room.soon .room-cta { color: #7e90b3; }
+  .gifted .room-cta .arw { transition: transform .3s ease; }
+  .gifted .room:hover .room-cta .arw { transform: translateX(5px); }
+  .gifted .rooms-note { text-align: center; font-size: 12.5px; color: #7e90b3; margin: 26px 0 0; letter-spacing: .03em; }
+
+  .gifted .band { padding: 70px 0; }
+  .gifted .band.surface { background: var(--surface); }
+  .gifted .band.dark { background: linear-gradient(155deg, #0C234B, #001C48); color: #fff; }
+  .gifted .reading { max-width: 760px; }
+  .gifted .btitle { font-family: 'Source Serif 4', Georgia, serif; font-weight: 600; font-size: 27px; line-height: 1.16;
+    color: var(--navy); margin: 8px 0 0; letter-spacing: -.01em; }
+  .gifted .band.dark .btitle { color: #fff; }
+  .gifted .btitle .lab { display: block; font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 600;
+    letter-spacing: .13em; text-transform: uppercase; color: var(--muted); margin-bottom: 9px; }
+  .gifted .band.dark .btitle .lab { color: var(--sky); }
+  .gifted .bbody { font-size: 17px; color: var(--ink); margin: 18px 0 0; }
+  .gifted .band.dark .bbody { color: #d6e0ef; }
+  .gifted .bbody .hl { color: var(--navy); font-weight: 600; }
+  .gifted .band.dark .bbody .hl { color: #fff; }
+
+  .gifted .reveal { opacity: 0; transform: translateY(26px);
+    transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s);
+    will-change: opacity, transform; }
+  .gifted .reveal.in { opacity: 1; transform: none; }
+  .gifted .reveal.media { transform: translateY(34px) scale(.965); }
+  .gifted .reveal.media.in { transform: none; }
+  .gifted .paccent { transform: scaleX(0); transform-origin: left; transition: transform .6s ease .15s; }
+  .gifted .reveal.in .paccent { transform: scaleX(1); }
+  @media (prefers-reduced-motion: reduce) {
+    .gifted .reveal, .gifted .paccent { opacity:1 !important; transform:none !important; transition:none !important; }
+    .gifted-scroll { scroll-behavior: auto; }
+  }
+  @media (max-width: 860px) {
+    .gifted .h-sec { font-size: 33px; }
+    .gifted .lede { font-size: 16.5px; }
+    .gifted .rooms { grid-template-columns: 1fr; gap: 20px; max-width: 420px; }
+    .gifted .btitle { font-size: 23px; }
+    .gifted .bbody { font-size: 16px; }
+    .gifted .band { padding: 52px 0; }
+    .gifted .stage-in { padding: 44px 24px 50px; }
+  }
+</style>
+</head>
+<body>
+  <div class="reader-panel">
+    <div class="mock-close">&#10005;</div>
+    <div class="gifted">
+      <div class="gifted-scroll" id="giftedScroll">
+
+        <!-- 1 · INTRO -->
+        <section class="intro">
+          <div class="container">
+            <div class="reveal"><span class="kicker"><span class="dot"></span>Self-Started Venture · Launching September 2026</span></div>
+            <h2 class="h-sec reveal" style="--d:.06s">The right gift, <span class="thin">without the guesswork.</span></h2>
+            <div class="reveal" style="--d:.12s"><div class="paccent"></div></div>
+            <p class="lede reveal" style="--d:.16s"><span class="wm">Gifted</span> is a web app I'm designing and building to take the guesswork out of giving, with an intended launch in September 2026. Instead of scrolling endless product lists, you browse hand-curated themed rooms like a Man Cave or a Garage, each stocked with a tight, considered set of gifts for that kind of person. Find something that fits, click through, and buy it straight from the retailer.</p>
+            <p class="lede sub reveal" style="--d:.22s">It's free to use. Gifted earns an affiliate commission on what sells, so the revenue comes from retail partners, not the people doing the gifting. It's built for everyday gift-givers, the busy, the stuck, and the last-minute, who'd rather land on something thoughtful in two minutes than lose an evening to a dozen open tabs.</p>
+          </div>
+        </section>
+
+        <!-- 2 · STAGE — demo rooms -->
+        <div class="stage">
+          <div class="stage-in">
+            <p class="stage-tag reveal"><span class="ln"></span>Step into a demo room<span class="ln"></span></p>
+            <div class="rooms">
+              <a class="room reveal media soon" style="--d:.04s" href="#" aria-disabled="true">
+                <div class="room-art">
+                  <div class="room-ph">
+                    <span class="room-ico">
+                      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="11" width="34" height="22" rx="3"/><path d="M20 39h8M24 33v6"/><path d="M21 17.5l8 4.5-8 4.5z"/></svg>
+                    </span>
+                  </div>
+                  <span class="room-badge">Demo coming soon</span>
+                </div>
+                <div class="room-body">
+                  <h3 class="room-name">The Man Cave</h3>
+                  <p class="room-blurb">Gifts for the guy whose whole personality is game day.</p>
+                  <span class="room-cta">Preview soon <span class="arw">&#8594;</span></span>
+                </div>
+              </a>
+              <a class="room reveal media soon" style="--d:.12s" href="#" aria-disabled="true">
+                <div class="room-art">
+                  <div class="room-ph">
+                    <span class="room-ico">
+                      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 21 24 9l18 12"/><rect x="9.5" y="21" width="29" height="19" rx="1.5"/><path d="M9.5 27h29M9.5 33h29"/></svg>
+                    </span>
+                  </div>
+                  <span class="room-badge">Demo coming soon</span>
+                </div>
+                <div class="room-body">
+                  <h3 class="room-name">The Garage</h3>
+                  <p class="room-blurb">Tools, gear, and toys for the tinkerer.</p>
+                  <span class="room-cta">Preview soon <span class="arw">&#8594;</span></span>
+                </div>
+              </a>
+            </div>
+            <p class="rooms-note reveal" style="--d:.2s">Two sample rooms from the concept. The full app launches September 2026.</p>
+          </div>
+        </div>
+
+        <!-- 3 · WHAT IT PROVES — Claim -->
+        <section class="band surface">
+          <div class="container"><div class="reading reveal">
+            <h3 class="btitle"><span class="lab">What it proves</span>Gifted is more than just a business. It's a tool for my growth.</h3>
+            <p class="bbody">I'm taking on the whole venture with AI, from designing and building the 3D assets and environments, to planning and running the marketing campaign behind it. My goal with this endeavor is to build a comprehensive understanding of the capabilities of AI and how to implement them practically.</p>
+          </div></div>
+        </section>
+
+        <!-- 4 · WHY IT MATTERS — Reasoning -->
+        <section class="band dark">
+          <div class="container"><div class="reading reveal">
+            <h3 class="btitle"><span class="lab">Why it matters</span>In financial fields, the people who pull ahead will be the ones who stay aware of and leverage the tools available, constantly adopting new and efficient practices.</h3>
+            <p class="bbody">Running Gifted, from creating 3D environments to in-depth marketing strategies for promotion, has helped me build the habits necessary to succeed in this <span class="hl">uniquely AI-focused environment.</span></p>
+          </div></div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // reveal-on-scroll, scoped to the panel's scroll container (mirrors GiftedSection.tsx)
+    (function () {
+      var root = document.getElementById('giftedScroll');
+      if (!root) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = root.querySelectorAll('.reveal');
+      if (reduce || !('IntersectionObserver' in window)) {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries, obs) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('in');
+          obs.unobserve(e.target);
+        });
+      }, { root: root, threshold: 0.16 });
+      nodes.forEach(function (n) { io.observe(n); });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  /* HUD accent — University of Arizona Cardinal Red (CTAs, active + hover states). */
+  --color-accent: #AB0520;
+  /* U of A navy-branded surface + highlight palette (dark chrome over the room). */
+  --color-arizona: #0C234B;  /* Arizona Blue — primary panel/navbar surface */
+  --color-midnight: #001C48; /* deepest navy — backdrops + reader field */
+  --color-navy2: #15294D;    /* raised navy — hover/secondary surface */
+  --color-sky: #81D3EB;      /* sky — light-blue highlight / eyebrow labels */
+  --color-bloom: #EF4056;    /* bright red — hover/glow on the accent */
+}
+
+:root {
+  --ink: #e8eaed;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  /* Ambient dark gallery: soft vignette, a faint warm glow low-center (room warmth), a
+     large soft cool spotlight pool behind the room, and a lifted (atmospheric, not pitch
+     black) dark base. */
+  background:
+    radial-gradient(120% 120% at 50% 46%, rgba(0, 0, 0, 0) 58%, rgba(0, 0, 0, 0.5) 100%),
+    radial-gradient(72% 52% at 50% 64%, rgba(168, 120, 74, 0.16) 0%, rgba(168, 120, 74, 0) 60%),
+    radial-gradient(98% 72% at 50% 26%, rgba(122, 134, 162, 0.4) 0%, rgba(122, 134, 162, 0) 64%),
+    radial-gradient(140% 130% at 50% 6%, #20242e 0%, #0c0e13 72%),
+    #0c0e13;
+  overflow: hidden;
+}
+
+#root { position: relative; }
+.scene-canvas { position: absolute; inset: 0; }
+
+/* HTML layer where the full-screen content readers mount. Click-through by default;
+   the Reader re-enables pointer events on itself when a section is open. */
+.overlay-layer { position: absolute; inset: 0; pointer-events: none; z-index: 10; }
+
+/* Full-screen reader entrance animations. */
+@keyframes readerFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes readerRise {
+  from { opacity: 0; transform: translateY(12px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+.reader-backdrop { animation: readerFade 0.18s ease-out; }
+.reader-panel { animation: readerRise 0.24s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+/* Loading-bar scan + hint pulse (first-impression layer). */
+@keyframes loaderScan { 0% { transform: translateX(-130%); } 100% { transform: translateX(430%); } }
+.loader-bar { animation: loaderScan 1.1s ease-in-out infinite; }
+@keyframes hintPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+.hint-pulse { animation: hintPulse 1.6s ease-in-out infinite; }
+
+/* Navbar drop-in reveal (plays when the visitor enters the environment). */
+@keyframes navReveal { from { transform: translateY(-105%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.nav-reveal { animation: navReveal 0.5s cubic-bezier(0.2, 0.85, 0.25, 1); }
+
+/* Landing CTA — a boxless "Step inside" that draws the eye with a soft glow breathe + a
+   gently nudging arrow (no border/background). Honors reduced motion. */
+@keyframes ctaGlow {
+  0%, 100% { opacity: 0.82; text-shadow: 0 0 0 rgba(239, 64, 86, 0); }
+  50%      { opacity: 1;    text-shadow: 0 0 22px rgba(239, 64, 86, 0.55); }
+}
+@keyframes ctaNudge {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(5px); }
+}
+.cta-pulse { animation: ctaGlow 2.4s ease-in-out infinite; }
+.cta-nudge { animation: ctaNudge 1.5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .cta-pulse, .cta-nudge { animation: none; }
+}
+
+/* Left "Help me navigate" guide — slide in from the edge (vertical centering lives on
+   the parent, so this only animates opacity + X to avoid clobbering the centering transform). */
+@keyframes guideIn { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+.guide-in { animation: guideIn 0.45s cubic-bezier(0.2, 0.85, 0.25, 1) both; }
+
+/* Sharp-HUD faint grid behind the document surround. */
+.hud-grid {
+  background-color: #001C48;
+  background-image:
+    linear-gradient(rgba(129, 211, 235, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(129, 211, 235, 0.06) 1px, transparent 1px);
+  background-size: 36px 36px;
+}

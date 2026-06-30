@@ -1,0 +1,136 @@
+{
+  "desk": {
+    "position": [
+      -1.13,
+      0,
+      -2.355
+    ],
+    "rotationX": 0,
+    "rotationY": 0,
+    "rotationZ": 0,
+    "scale": 1
+  },
+  "deskChair": {
+    "position": [
+      -1.13,
+      0,
+      -1.68
+    ],
+    "rotationX": 0,
+    "rotationY": 3.3015926535897933,
+    "rotationZ": 0,
+    "scale": 1
+  },
+  "computerScreen": {
+    "position": [
+      -2.05,
+      1.41,
+      -2.4
+    ],
+    "rotationX": 0,
+    "rotationY": 0.18,
+    "rotationZ": 0,
+    "scale": 1.4
+  },
+  "framedPhoto": {
+    "position": [
+      -1.42,
+      1.41,
+      -2.28
+    ],
+    "rotationX": -0.06,
+    "rotationY": 0.12,
+    "rotationZ": 0,
+    "scale": 1.6
+  },
+  "resumeStand": {
+    "position": [
+      -0.8,
+      1.41,
+      -2.28
+    ],
+    "rotationX": 0,
+    "rotationY": -0.08,
+    "rotationZ": 0,
+    "scale": 2.32
+  },
+  "nameplate": {
+    "position": [
+      -0.18,
+      1.41,
+      -2.4
+    ],
+    "rotationX": 0,
+    "rotationY": -0.1,
+    "rotationZ": 0,
+    "scale": 1
+  },
+  "cradle": {
+    "position": [
+      -2.55,
+      1.41,
+      -2.75
+    ],
+    "rotationX": 0,
+    "rotationY": 0.3,
+    "rotationZ": 0,
+    "scale": 1
+  },
+  "mug": {
+    "position": [
+      0.38,
+      1.41,
+      -2.72
+    ],
+    "rotationX": 0,
+    "rotationY": 0.6,
+    "rotationZ": 0,
+    "scale": 1.3
+  },
+  "whiteboard": {
+    "position": [
+      -2.86,
+      1.62,
+      0.65
+    ],
+    "rotationX": 0,
+    "rotationY": 1.5707963267948966,
+    "rotationZ": 0,
+    "scale": 1
+  },
+  "jersey": {
+    "position": [
+      2.51,
+      0,
+      -2.34
+    ],
+    "rotationX": 0,
+    "rotationY": -0.701592653589793,
+    "rotationZ": 0,
+    "scale": 1.69,
+    "locked": true
+  },
+  "present": {
+    "position": [
+      1.2,
+      0,
+      -1.9
+    ],
+    "rotationX": 0,
+    "rotationY": -0.4,
+    "rotationZ": 0,
+    "scale": 1,
+    "locked": true
+  },
+  "trophy": {
+    "position": [
+      1.8,
+      1.45,
+      -2.87
+    ],
+    "rotationX": 0,
+    "rotationY": 0,
+    "rotationZ": 0,
+    "scale": 1
+  }
+}

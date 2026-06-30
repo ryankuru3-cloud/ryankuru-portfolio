@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professional Evolution — Ryan Kuru</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0C234B; --ink-soft:#1E3A5F; --slate:#56697C; --slate-light:#8A99A8;
+    --line:#E2E9EB; --bg:#F4F6F9; --surface:#FFFFFF;
+    --navy:#001C48; --navy-2:#0C234B; --gold:#AB0520; --gold-soft:#EF4056;
+    --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+  .progress{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:60}
+  .progress__fill{height:100%;width:0;background:linear-gradient(90deg,#AB0520,#EF4056);transition:width .1s linear}
+
+  .dotnav{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:16px}
+  .dotnav a{width:9px;height:9px;border-radius:50%;background:#C8D0DA;display:block;position:relative;transition:.3s}
+  .dotnav a.active{background:var(--gold);transform:scale(1.25)}
+  .dotnav a span{position:absolute;right:20px;top:50%;transform:translateY(-50%);white-space:nowrap;font-size:.7rem;letter-spacing:.04em;color:var(--slate);opacity:0;pointer-events:none;transition:.25s;text-transform:uppercase}
+  .dotnav a:hover span{opacity:1}
+  @media(max-width:900px){.dotnav{display:none}}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  section{position:relative}
+  .eyebrow{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;display:flex;align-items:center;gap:12px}
+  .eyebrow::before{content:"";width:30px;height:1px;background:var(--gold)}
+
+  .hero{background:linear-gradient(160deg,#001C48 0%,#0C234B 100%);color:#fff;padding:160px 0 120px;overflow:hidden}
+  .hero::after{content:"";position:absolute;right:-120px;top:-120px;width:480px;height:480px;border:1px solid rgba(255,255,255,.06);border-radius:50%}
+  .hero::before{content:"";position:absolute;right:-40px;bottom:-200px;width:560px;height:560px;border:1px solid rgba(171,5,32,.14);border-radius:50%}
+  .hero .eyebrow{color:var(--gold-soft)} .hero .eyebrow::before{background:var(--gold-soft)}
+  .hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.7rem,6vw,4.4rem);line-height:1.05;letter-spacing:-.01em;margin:22px 0 0}
+  .hero .lede{max-width:620px;margin-top:26px;font-size:1.18rem;color:#C3D0DD;font-weight:400}
+  .hero .placeholder{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-soft);border:1px dashed rgba(239,64,86,.5);border-radius:30px;padding:4px 12px;display:inline-block;margin-top:30px}
+  .hero .name{display:flex;align-items:baseline;gap:14px;margin-top:54px;color:#8FA2B4;font-size:.92rem;letter-spacing:.04em}
+  .hero .name b{color:#fff;font-weight:600;letter-spacing:.02em}
+
+  .finding{padding:120px 0}
+  .finding__num{font-family:var(--serif);font-size:clamp(4rem,11vw,8rem);line-height:.8;color:#E7EBF1;font-weight:600;position:absolute;top:78px;right:32px;z-index:0;pointer-events:none}
+  .finding__head{position:relative;z-index:1;max-width:760px}
+  .claim{font-family:var(--serif);font-weight:500;font-size:clamp(1.5rem,2.7vw,2.05rem);line-height:1.42;color:var(--ink);margin-top:26px;letter-spacing:-.005em}
+  .claim em{font-style:normal;color:var(--gold);font-weight:600}
+
+  .sectionlabel{font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--slate-light);font-weight:600;margin:70px 0 22px;display:flex;align-items:center;gap:14px}
+  .sectionlabel::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 1px 2px rgba(14,31,51,.04),0 12px 30px -18px rgba(14,31,51,.18)}
+  .chartcard{padding:38px 40px 30px}
+  .chartcard h3{font-family:var(--sans);font-size:.96rem;font-weight:600;color:var(--ink);letter-spacing:.01em}
+  .chartcard .sub{font-size:.84rem;color:var(--slate-light);margin-top:3px;margin-bottom:26px}
+  .bars{display:flex;flex-direction:column;gap:20px}
+  .bar__row{display:grid;grid-template-columns:140px 1fr 50px;align-items:center;gap:16px}
+  .bar__label{font-size:.9rem;color:var(--ink-soft);font-weight:500}
+  .bar__track{display:block;height:14px;background:#AB0520;border-radius:20px;overflow:hidden}
+  .bar__fill{display:block;height:100%;width:0;background:#0C234B;border-radius:20px 0 0 20px;transition:width 1.25s cubic-bezier(.22,.68,.2,1)}
+  .bar__val{font-family:var(--serif);font-weight:600;font-size:1.18rem;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
+  .bar__axis{display:flex;justify-content:space-between;font-size:.68rem;color:var(--slate-light);margin:14px 0 0;padding-left:156px;letter-spacing:.04em}
+
+  /* social-styles scatter (Finding 02) */
+  .scattercard{padding:34px 40px 26px}
+  .scattercard h3{font-family:var(--sans);font-size:.96rem;font-weight:600;color:var(--ink)}
+  .scattercard .sub{font-size:.84rem;color:var(--slate-light);margin-top:3px;margin-bottom:8px}
+  .scatter{width:100%;max-width:500px;height:auto;display:block;margin:0 auto}
+  .scatter-legend{display:flex;gap:26px;justify-content:center;margin-top:4px;font-size:.84rem;color:var(--slate)}
+  .scatter-legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:middle}
+  .dot--self{background:#fff;border:2px solid #0C234B}
+  .dot--rep{background:#AB0520}
+  .scatter-cap{font-size:.9rem;color:var(--slate);text-align:center;margin:16px auto 0;max-width:560px;line-height:1.6}
+  .scatter-cap b{color:var(--ink-soft);font-weight:600}
+  /* adjective tags — size = emphasis, no counts */
+  .adjwrap{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:16px}
+  .adj{display:inline-flex;border-radius:30px;padding:7px 14px;font-weight:500;background:#F3F5F9;border:1px solid var(--line);color:var(--ink-soft);line-height:1}
+  .adj.lg{font-size:1rem;font-weight:700;background:#0C234B;color:#fff;border-color:#0C234B;padding:9px 17px}
+  .adj.md{font-size:.9rem;font-weight:600;background:#FBE9EC;border-color:var(--gold-soft);color:var(--ink)}
+  .adj.sm{font-size:.82rem}
+  /* convergence display (Finding 03) */
+  .convergecard{padding:32px 40px 30px}
+  .convergecard h3{font-family:var(--sans);font-size:.96rem;font-weight:600;color:var(--ink);margin-bottom:24px;text-align:center}
+  .converge{display:flex;align-items:center;gap:22px;flex-wrap:wrap;justify-content:center}
+  .converge__side{flex:1 1 220px}
+  .converge__lab{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--slate-light);font-weight:600;display:block;margin-bottom:12px}
+  .converge__mid{display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--gold);flex:0 0 auto}
+  .converge__arrow{font-size:1.5rem;line-height:1}
+  .converge__note{font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--slate-light);white-space:nowrap}
+
+  .evgrid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:26px}
+  @media(max-width:760px){.evgrid{grid-template-columns:1fr}}
+  .block{padding:34px 34px 32px}
+  .block h4{font-family:var(--serif);font-size:1.28rem;font-weight:600;color:var(--ink);margin-bottom:4px}
+  .block .tag{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px;display:block}
+  .stats{display:flex;gap:24px;flex-wrap:wrap;margin:18px 0 6px}
+  .stat__num{font-family:var(--serif);font-weight:600;font-size:2.15rem;color:var(--ink);line-height:1;font-variant-numeric:tabular-nums}
+  .stat__lab{font-size:.78rem;color:var(--slate);margin-top:7px;max-width:120px;line-height:1.4}
+  .quote{border-left:2px solid var(--gold);padding:4px 0 4px 16px;margin:20px 0 6px;font-family:var(--serif);font-style:italic;color:var(--ink-soft);font-size:1.02rem}
+  .line{font-size:.96rem;color:var(--slate);margin-top:6px}
+  .line b{color:var(--ink-soft);font-weight:600}
+  .line.tiny{font-size:.82rem;color:var(--slate-light);margin-top:9px}
+  .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}
+  .chip{font-size:.82rem;font-weight:500;color:var(--ink-soft);background:#F3F5F9;border:1px solid var(--line);border-radius:30px;padding:8px 15px;display:inline-flex;gap:7px;align-items:center}
+  .proj{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--ink);background:#fff;border:1.5px solid var(--gold-soft);border-radius:30px;padding:8px 16px;text-decoration:none;font-size:.86rem;transition:.2s}
+  .proj:hover{border-color:var(--gold);background:#FBE9EC;color:var(--gold);transform:translateY(-1px)}
+  .proj .ar{color:var(--gold);font-weight:700;font-size:.95em}
+
+  .pfband{margin-top:32px;background:linear-gradient(105deg,#001C48 0%,#0C234B 100%);border-radius:16px;padding:32px 36px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;position:relative;overflow:hidden}
+  .pfband::after{content:"";position:absolute;right:-50px;top:-70px;width:240px;height:240px;border:1px solid rgba(171,5,32,.18);border-radius:50%}
+  .pfband__t{position:relative;z-index:1;max-width:580px}
+  .pfband__t .k{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-soft);font-weight:600;margin-bottom:8px;display:block}
+  .pfband__t p{color:#CBD6E1;font-size:1.04rem}
+  .pfband__t p b{color:#fff;font-weight:600}
+  .btn{background:var(--gold);color:#fff;font-weight:700;padding:15px 28px;border-radius:30px;text-decoration:none;font-size:.92rem;white-space:nowrap;transition:.2s;display:inline-flex;gap:10px;align-items:center;position:relative;z-index:1}
+  .btn:hover{background:var(--gold-soft);transform:translateX(3px)}
+
+  .reasoning{margin-top:64px;max-width:780px;position:relative;z-index:1}
+  .reasoning .sectionlabel{margin-top:0}
+  .reasoning p{font-family:var(--serif);font-size:clamp(1.18rem,2vw,1.42rem);line-height:1.6;color:var(--ink);font-weight:400}
+  .reasoning p .hl{color:var(--gold);font-weight:600}
+
+  .stub{padding:96px 0;border-top:1px solid var(--line)}
+  .stub .claim{color:var(--slate-light)}
+  .pill{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);background:#EAEEF3;border-radius:30px;padding:5px 13px;font-weight:600;display:inline-block;margin-top:18px}
+
+  .closing{background:linear-gradient(160deg,#001C48 0%,#0C234B 100%);color:#fff;padding:110px 0}
+  .closing .eyebrow{color:var(--gold-soft)} .closing .eyebrow::before{background:var(--gold-soft)}
+  .closing blockquote{font-family:var(--serif);font-size:clamp(1.4rem,2.6vw,1.95rem);line-height:1.5;font-weight:400;max-width:820px;margin-top:24px;color:#EAF0F6}
+  .closing .src{margin-top:22px;color:#8FA2B4;font-size:.85rem}
+  .closing-lead{font-size:1.12rem;line-height:1.7;color:#D6E0EA;max-width:760px;margin-top:20px}
+  .closing blockquote em{color:#fff;font-style:italic}
+  .closing-btn{margin-top:30px}
+  footer{background:#001C48;color:#7C8EA0;text-align:center;padding:34px 0;font-size:.8rem;letter-spacing:.03em}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .bar__fill{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress__fill" id="prog"></div></div>
+
+<nav class="dotnav" aria-hidden="true">
+  <a href="#top" class="active"><span>Top</span></a>
+  <a href="#f01"><span>Core Values</span></a>
+  <a href="#f02"><span>Communication</span></a>
+  <a href="#f03"><span>Growth</span></a>
+  <a href="#close"><span>Close</span></a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <p class="eyebrow">Professional Evolution</p>
+    <h1>How I see myself,<br>and how others do.</h1>
+    <p class="lede">In wealth management, it comes down to an important question: can a client trust you with their money and their relationship? Rather than just a baseless claim that I'm trustworthy, I've pulled real assessment data, comparing how I see myself and how other people perceive me — people who know me and have worked with me. Three things held up across all of it: I'm driven with the ability to hold myself accountable, I'm direct and honest while adapting to whoever I'm with, and I stay composed and sharp when the stakes are highest.</p>
+    <div class="name"><b>Ryan Kuru</b> · University of Arizona · Wealth Management</div>
+  </div>
+</section>
+
+<!-- FINDING 01 — CORE VALUES -->
+<section class="finding" id="f01">
+  <div class="finding__num">01</div>
+  <div class="wrap">
+    <div class="finding__head reveal">
+      <p class="eyebrow">Core Values</p>
+      <p class="claim">What really drives me is wanting to be the best version of myself, in all aspects of life. Since I know what I'm capable of, I raise the bar for myself higher than anyone else would. I put immense value on my self education and the things that will help set me apart. <em>That drive is exactly why the people around me can confidently put their full trust in my services.</em></p>
+    </div>
+
+    <p class="sectionlabel reveal">The Evidence</p>
+
+    <!-- CHART -->
+    <div class="card chartcard reveal">
+      <h3>What motivates me — my own assessment</h3>
+      <p class="sub">Top motivators, SPI self-assessment (scored out of 100)</p>
+      <div class="bars">
+        <div class="bar__row">
+          <span class="bar__label">Helping others</span>
+          <span class="bar__track"><span class="bar__fill" data-w="98"></span></span>
+          <span class="bar__val"><span data-count="98" data-decimals="0">98</span></span>
+        </div>
+        <div class="bar__row">
+          <span class="bar__label">Stability</span>
+          <span class="bar__track"><span class="bar__fill" data-w="97"></span></span>
+          <span class="bar__val"><span data-count="97" data-decimals="0">97</span></span>
+        </div>
+        <div class="bar__row">
+          <span class="bar__label">Drive to compete</span>
+          <span class="bar__track"><span class="bar__fill" data-w="95"></span></span>
+          <span class="bar__val"><span data-count="95" data-decimals="0">95</span></span>
+        </div>
+      </div>
+      <div class="bar__axis"><span>0</span><span>50</span><span>100</span></div>
+    </div>
+
+    <!-- TWO BLOCKS -->
+    <div class="evgrid">
+      <div class="card block reveal d1">
+        <span class="tag">The drive is real</span>
+        <h4>Not self-reported.</h4>
+        <p class="line">I rate my drive to compete a 95 — and my teammates put numbers on it independently:</p>
+        <div class="stats">
+          <div><div class="stat__num"><span data-count="95" data-decimals="0">95</span>%</div><div class="stat__lab">effort, peer-rated</div></div>
+          <div><div class="stat__num"><span data-count="93.75" data-decimals="2">93.75</span>%</div><div class="stat__lab">quality of work</div></div>
+          <div><div class="stat__num"><span data-count="75" data-decimals="0">75</span>%</div><div class="stat__lab">ranked me #1 contributor</div></div>
+        </div>
+        <p class="quote">"Put in the most effort out of all of us."</p>
+        <p class="line" style="margin-top:18px">Shown in real work:</p>
+        <div class="chips">
+          <a class="proj" href="#portfolio">ICON <span class="ar">&#8599;</span></a>
+          <a class="proj" href="#portfolio">Gifted <span class="ar">&#8599;</span></a>
+        </div>
+        <p class="line tiny">Gifted — teaching myself AI by building it.</p>
+      </div>
+
+      <div class="card block reveal d2">
+        <span class="tag">Why that drive earns trust</span>
+        <h4>Pointed the right way.</h4>
+        <p class="line"><b>Helping others — 98.</b> My single highest motivator. The drive is aimed at people, not just a scoreboard.</p>
+        <p class="line"><b>Stability — 97.</b> I move fast, not reckless.</p>
+        <p class="line" style="margin-top:18px">Shown in real work:</p>
+        <div class="chips">
+          <span class="chip">2 yrs personal training</span>
+          <a class="proj" href="#portfolio">DECA <span class="ar">&#8599;</span></a>
+        </div>
+        <p class="line tiny">DECA — a financial-services roleplay I won.</p>
+      </div>
+    </div>
+
+    <!-- LOUD PORTFOLIO CROSS-REFERENCE -->
+    <div class="pfband reveal">
+      <div class="pfband__t">
+        <span class="k">See the proof</span>
+        <p><b>These aren't ideas on paper.</b> ICON, Gifted, and DECA are real — each one gets a full breakdown, the story and the results, in my portfolio.</p>
+      </div>
+      <a class="btn" href="#portfolio">Explore the Portfolio <span>&#8594;</span></a>
+    </div>
+
+    <!-- REASONING -->
+    <div class="reasoning reveal">
+      <p class="sectionlabel">The Reasoning</p>
+      <p>The reason all that drive turns into trust is that I'm the one holding myself to it — no one else. In life, I firmly believe the most important relationship I have is the one with myself — it comes down to how I see myself, and whether I can say I'm proud of who I am. So the people I work with never have to wonder whether I'll show up or cut corners. And it isn't only how I see myself: <span class="hl">the people I've worked with describe the same drive.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- FINDING 02 — COMMUNICATION STYLE -->
+<section class="finding" id="f02">
+  <div class="finding__num">02</div>
+  <div class="wrap">
+    <div class="finding__head reveal">
+      <p class="eyebrow">Communication Style</p>
+      <p class="claim">Being <em>direct and honest</em> is the core of how I communicate, but I've never believed in a one-size-fits-all delivery. My ability to read the room well and adjust how I get my message across to whoever's in front of me is my <em>differentiating factor</em> in staying credible and having people actually be receptive to any message.</p>
+    </div>
+
+    <p class="sectionlabel reveal">The Evidence</p>
+
+    <div class="card scattercard reveal">
+      <h3>How I read my own style vs. how I'm experienced</h3>
+      <p class="sub">Social-styles read — Proactivity (assertiveness) across, Reactivity (warmth) up</p>
+      <svg class="scatter" viewBox="0 0 480 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Social-styles chart: self-view sits on the Driver/Expressive line; reputation sits in the Expressive quadrant.">
+        <rect x="240" y="38" width="162" height="162" fill="#AB0520" opacity="0.10"/>
+        <rect x="78" y="38" width="324" height="324" fill="none" stroke="#E2E9EB"/>
+        <line x1="240" y1="38" x2="240" y2="362" stroke="#D8DEE6"/>
+        <line x1="78" y1="200" x2="402" y2="200" stroke="#D8DEE6"/>
+        <text x="396" y="54" text-anchor="end" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#AB0520">Expressive</text>
+        <text x="396" y="354" text-anchor="end" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#8A99A8">Driver</text>
+        <text x="84" y="54" text-anchor="start" font-family="Inter,sans-serif" font-size="12" fill="#8A99A8">Amiable</text>
+        <text x="84" y="354" text-anchor="start" font-family="Inter,sans-serif" font-size="12" fill="#8A99A8">Analytical</text>
+        <text x="240" y="386" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#8A99A8">Proactivity &#8594;</text>
+        <text x="22" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#8A99A8" transform="rotate(-90 22 200)">Reactivity &#8594;</text>
+        <defs><marker id="ah" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#AB0520"/></marker></defs>
+        <line x1="298" y1="198" x2="319" y2="185" stroke="#AB0520" stroke-width="1.8" stroke-dasharray="3 3" marker-end="url(#ah)"/>
+        <circle cx="294" cy="200" r="8" fill="#fff" stroke="#0C234B" stroke-width="2.5"/>
+        <circle cx="323" cy="182" r="8.5" fill="#AB0520"/>
+      </svg>
+      <div class="scatter-legend">
+        <span><i class="dot dot--self"></i>How I see myself</span>
+        <span><i class="dot dot--rep"></i>How others see me</span>
+      </div>
+      <p class="scatter-cap">I place myself right on the <b>Driver/Expressive line</b> — direct, results-first. The people who reviewed me land me squarely in <b>Expressive</b>: more assertive, and warmer than I rate myself.</p>
+    </div>
+
+    <div class="evgrid">
+      <div class="card block reveal d1">
+        <span class="tag">How I see myself</span>
+        <h4>Direct &amp; results-first.</h4>
+        <p class="line">My self-assessment reads <b>Driver/Expressive</b> — and my single highest working value is <b>relationships</b>.</p>
+        <div class="adjwrap">
+          <span class="adj md">Driven</span>
+          <span class="adj md">Problem-Solver</span>
+          <span class="adj md">Even-Tempered</span>
+          <span class="adj sm">Idea-Generator</span>
+        </div>
+      </div>
+      <div class="card block reveal d2">
+        <span class="tag">How it lands</span>
+        <h4>Confident, warm, engaging.</h4>
+        <p class="line">The people I've worked with read me as <b>Expressive</b>, not blunt. The words they reach for most:</p>
+        <div class="adjwrap">
+          <span class="adj lg">Self-Confident</span>
+          <span class="adj lg">Social</span>
+          <span class="adj lg">Easygoing</span>
+          <span class="adj lg">Spontaneous</span>
+          <span class="adj md">Calm</span>
+          <span class="adj md">Outgoing</span>
+          <span class="adj sm">Entertaining</span>
+          <span class="adj sm">Even-Tempered</span>
+          <span class="adj sm">Independent</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reasoning reveal">
+      <p class="sectionlabel">The Reasoning</p>
+      <p>Although I consider myself an extremely direct communicator, my messages don't come across as harsh or blunt, not because I hide facts, but because of my ability to shape the flow of a conversation. I tend to pick up on how someone needs to hear something, especially in a professional environment, and it shapes the way I decide to deliver my message. Being blunt tends to miss the target when it's a one-size-fits-all. However, when that tailored adjustment happens in the conversation, that same honest message comes off as confident and avoids friction. It's why the people I've worked with don't call me blunt, but instead they describe me as <span class="hl">self-confident, easygoing, and social</span>, even though I lead with directness. For an employer, that's the whole point: I'll give a client the truth, and deliver it in a way that keeps them comfortable and on board.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINDING 03 — COMPOSURE UNDER PRESSURE -->
+<section class="finding" id="f03">
+  <div class="finding__num">03</div>
+  <div class="wrap">
+    <div class="finding__head reveal">
+      <p class="eyebrow">Composure Under Pressure</p>
+      <p class="claim">I have the ability to perform when the pressure is on and the stakes are high. My tendency to <em>stay calm and level-headed</em> in stressful environments is what allows me to break through the noise and stand out. On top of that, I love the test — those moments help show me what I'm truly capable of, and where I'm able to learn and grow the most. Instead of shying away from the situations that make others nervous, <em>I look for them</em>.</p>
+    </div>
+
+    <p class="sectionlabel reveal">The Evidence</p>
+
+    <div class="card convergecard reveal">
+      <h3>The calm isn't self-reported — my reputation says the same</h3>
+      <div class="converge">
+        <div class="converge__side">
+          <span class="converge__lab">How I describe myself</span>
+          <div class="adjwrap"><span class="adj lg">Even-Tempered</span></div>
+        </div>
+        <div class="converge__mid" aria-hidden="true">
+          <span class="converge__arrow">&#8596;</span>
+          <span class="converge__note">same word</span>
+        </div>
+        <div class="converge__side">
+          <span class="converge__lab">How others describe me</span>
+          <div class="adjwrap">
+            <span class="adj md">Calm</span>
+            <span class="adj lg">Even-Tempered</span>
+            <span class="adj md">Poised</span>
+            <span class="adj md">Self-Confident</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card block reveal" style="margin-top:26px">
+      <span class="tag">Why I lean into it</span>
+      <h4>The drive behind seeking pressure out.</h4>
+      <p class="line">Composure is only half of it — the same data shows why I run toward high-stakes moments instead of away from them:</p>
+      <div class="adjwrap">
+        <span class="adj lg">Driven</span>
+        <span class="adj md">Growth-Oriented</span>
+        <span class="adj md">Risk-Taker</span>
+        <span class="adj sm">Experimental</span>
+      </div>
+    </div>
+
+    <div class="reasoning reveal">
+      <p class="sectionlabel">The Reasoning</p>
+      <p>Staying calm in high-pressure moments isn't a trait I have to force — it's a tendency that I consistently rely on and how I've learned to operate. It means a lot that the people I've worked with <span class="hl">describe me the same way I see myself</span>. However, what I care about even more is what these situations bring out. High-stakes situations show me what I'm truly capable of, and also where I have room to grow and the aspects I can improve. My appreciation for these moments gives me the urge to seek them out rather than avoid them. In a field like wealth management, where decisions are made under real pressure, this level-headed tendency of mine becomes a major asset.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION STUB / CLOSER -->
+<section class="closing" id="close">
+  <div class="wrap">
+    <p class="eyebrow">In closing</p>
+    <p class="closing-lead">When the data is put together, one message becomes clear: I'm someone you can trust with clients and count on when the stakes are high. I'm driven and able to hold myself accountable. Honesty keeps my messaging clear, while my adaptability eases any friction. On top of that, I have the ability to stay steady under pressure. I would love to bring these assets into a wealth-management environment, while I continue to grow and learn, with the end goal of becoming an advisor a client doesn't just hire, but keeps around for the long run.</p>
+    <blockquote>One line has stuck with me for a while — <em>if you want to go fast, go alone; if you want to go far, go together.</em> I used to only believe the first half. Holding yourself to a high standard makes solo feel faster. What I've learned is that "far" is the whole point in this work, and far means being the steady hand a client reaches for when the plan gets tested.</blockquote>
+    <a class="btn closing-btn" href="#">Connect on LinkedIn &#8594;</a>
+  </div>
+</section>
+
+<footer>Ryan Kuru — Professional Evolution · draft mockup</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // top scroll-progress bar
+  var prog = document.getElementById('prog');
+  function onScroll(){
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    prog.style.width = (max>0 ? (d.scrollTop/max*100) : 0) + '%';
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // count-up (numbers default to their real value in the HTML, so they show even with no JS)
+  function countUp(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    var dec = parseInt(el.getAttribute('data-decimals')||'0',10);
+    if(reduce){ el.textContent = target.toFixed(dec); return; }
+    var dur = 1300, start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min(1,(ts-start)/dur);
+      var eased = 1-Math.pow(1-p,3);
+      el.textContent = (target*eased).toFixed(dec);
+      if(p<1) requestAnimationFrame(step); else el.textContent = target.toFixed(dec);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // bars start empty (CSS width:0); grow to their value on reveal, staggered left-to-right
+  function growBars(scope){
+    scope.querySelectorAll('.bar__fill').forEach(function(f,i){
+      var w = (f.getAttribute('data-w')||'0') + '%';
+      if(reduce){ f.style.width = w; return; }
+      setTimeout(function(){ f.style.width = w; }, 150 + i*170);
+    });
+  }
+
+  // JS is running → start counters at 0 so they visibly count up on reveal
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var dec = parseInt(el.getAttribute('data-decimals')||'0',10);
+    el.textContent = (0).toFixed(dec);
+  });
+
+  function reveal(el){
+    el.classList.add('in');
+    growBars(el);
+    el.querySelectorAll('[data-count]').forEach(countUp);
+  }
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        reveal(e.target);
+        io.unobserve(e.target);
+      });
+    },{threshold:0.1, rootMargin:'0px 0px -18% 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+    var dots = Array.prototype.slice.call(document.querySelectorAll('.dotnav a'));
+    var ids = ['top','f01','f02','f03','close'];
+    var navObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var i = ids.indexOf(e.target.id);
+          dots.forEach(function(d,di){ d.classList.toggle('active', di===i); });
+        }
+      });
+    },{threshold:0.5});
+    ids.forEach(function(id){ var s=document.getElementById(id); if(s) navObs.observe(s); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); el.querySelectorAll('[data-count]').forEach(countUp); });
+  }
+})();
+</script>
+</body>
+</html>

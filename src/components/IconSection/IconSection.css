@@ -1,0 +1,157 @@
+/* Google Fonts — Inter + Source Serif 4 (same stack as DecaSection / AboutBio). */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&display=swap');
+
+/*
+ * ICON portfolio section — a faithful port of icon-port/ICON_Section_Mockup_final.html
+ * (section markup only: intro → deck+story stage → "What it proves" → "Why it matters";
+ * the mockup's page-host block — html/body height + `.icon{height:100vh}` — is dropped so
+ * the panel fills the Reader card the way DecaSection does). EVERY rule is scoped under
+ * `.icon` (already done in the mockup) so the generic class names (.intro/.stage/.deck/
+ * .jerseys/.jcard/.band/.reveal/.frame/.shot/.cap/.kicker/.lede/.h-sec/.btitle/.bbody/.pull/
+ * .story/.jnote/.slabel …) can't collide with or be overridden by the rest of the site.
+ * Colors, type, spacing, the motions, and the prefers-reduced-motion fallback are unchanged.
+ */
+
+.icon {
+  --navy:#0C234B; --navy2:#15294d; --midnight:#001C48; --red:#AB0520;
+  --accent:#1E5288; --oasis:#378DBD; --sky:#81D3EB; --ink:#26324d; --muted:#5d6a85;
+  --line:rgba(12,35,75,.11); --bg:#ffffff; --surface:#eef2f6; --cool:#E2E9EB;
+  position: relative; height: 100%; background: var(--bg); color: var(--ink);
+  font-family: 'Inter', system-ui, Arial, sans-serif; line-height: 1.7; -webkit-font-smoothing: antialiased;
+}
+.icon * { box-sizing: border-box; }
+.icon a { color: inherit; }
+.icon-scroll { position: absolute; inset: 0; overflow-x: hidden; overflow-y: auto; scroll-behavior: smooth; }
+.icon .container { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+/* ---- INTRO (Context — what ICON is + current stage) -------------------- */
+.icon .intro { padding: 74px 0 56px; background:
+  radial-gradient(1100px 380px at 82% -8%, rgba(30,82,136,.07), transparent 60%), var(--bg); }
+.icon .kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.icon .kicker .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
+.icon .h-sec { font-family: 'Source Serif 4', Georgia, serif; font-weight: 600; font-size: 44px;
+  line-height: 1.07; letter-spacing: -.018em; color: var(--navy); margin: 16px 0 0; max-width: 17ch; }
+.icon .paccent { width: 54px; height: 3px; background: var(--red); margin: 18px 0 0; border-radius: 2px; }
+.icon .lede { font-size: 17.5px; color: var(--ink); max-width: 68ch; margin: 26px 0 0; }
+.icon .lede b { color: var(--navy); font-weight: 600; }
+.icon .lede .wm { color: var(--navy); font-weight: 700; }
+
+/* concept render figure (the product, shown as we describe it) */
+.icon .concept { max-width: 330px; margin: 40px auto 0; }
+.icon .jerseys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin: 40px 0 0; }
+.icon .jcard { margin: 0; }
+.icon .jcard .win { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--line);
+  box-shadow: 0 22px 48px -28px rgba(12,35,75,.5); aspect-ratio: 3/4; background: #fff;
+  display: flex; align-items: center; justify-content: center; padding: 14px; }
+.icon .jcard .win img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.icon .jcard:hover .win img { transform: scale(1.04); }
+.icon .jnote { text-align: center; font-size: 12.5px; color: var(--muted); margin: 14px 0 0; }
+
+/* ---- THE DECK + STORY — dark stage ------------------------------------- */
+.icon .stage { position: relative; color: #fff; overflow: hidden; clip-path: inset(0 0 0 0);
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(38,72,128,.55), transparent 60%),
+    linear-gradient(160deg, #15294d 0%, #0C234B 48%, #001C48 100%);
+  background-color: #0C234B; }
+.icon .stage:before { content:""; position:absolute; inset:0; pointer-events:none;
+  background: radial-gradient(60% 55% at 50% 40%, rgba(129,211,235,.18), rgba(55,141,189,.07) 45%, transparent 72%); }
+.icon .stage:after { content:""; position:absolute; inset:0; opacity:.05; pointer-events:none; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
+.icon .stage-in { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; padding: 52px 28px 60px; }
+.icon .stage-tag { display: flex; align-items: center; gap: 10px; justify-content: center; font-size: 11.5px;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--sky); font-weight: 600; margin: 0 0 22px; }
+.icon .stage-tag .ln { width: 26px; height: 1px; background: rgba(129,211,235,.5); }
+
+/* deck viewer */
+.icon .deck { position: relative; z-index: 2; max-width: 840px; margin: 0 auto; }
+.icon .deck-frame { position: relative; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden;
+  background: #0a1428; border: 1px solid rgba(129,211,235,.22); box-shadow: 0 30px 70px -36px rgba(0,12,40,.9); }
+.icon .deck-slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background:#0a1428;
+  opacity: 0; transition: opacity .5s ease; }
+.icon .deck-slide.on { opacity: 1; }
+.icon .deck-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 4;
+  width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255,255,255,.28);
+  background: rgba(12,35,75,.55); color: #fff; font-size: 22px; line-height: 1; cursor: pointer;
+  display: grid; place-items: center; backdrop-filter: blur(4px); transition: background .2s, border-color .2s; }
+.icon .deck-nav:hover { background: var(--accent); border-color: var(--sky); }
+.icon .deck-nav.prev { left: 12px; } .icon .deck-nav.next { right: 12px; }
+.icon .deck-count { position: absolute; right: 12px; bottom: 12px; z-index: 4; font-size: 12px; font-weight: 600;
+  letter-spacing: .08em; color: #fff; background: rgba(12,35,75,.62); padding: 4px 9px; border-radius: 20px;
+  border: 1px solid rgba(129,211,235,.28); }
+.icon .deck-cap { display: flex; gap: 11px; align-items: baseline; justify-content: center; margin: 18px auto 0; max-width: 720px; text-align: center; }
+.icon .deck-cap .num { font-family: 'Source Serif 4', serif; font-weight: 600; font-size: 13px; color: var(--sky); flex: none; }
+.icon .deck-cap .tx { font-size: 14px; color: #aebfdb; line-height: 1.5; }
+.icon .deck-dots { display: flex; gap: 8px; justify-content: center; margin: 16px 0 0; }
+.icon .deck-dots button { width: 8px; height: 8px; border-radius: 50%; border: 0; padding: 0; cursor: pointer;
+  background: rgba(255,255,255,.28); transition: background .2s, transform .2s; }
+.icon .deck-dots button.on { background: var(--red); transform: scale(1.25); }
+.icon .deck-hint { text-align: center; font-size: 11px; letter-spacing: .04em; color: #7e90b3; margin: 12px 0 0; }
+
+/* the story paragraph (the explanation behind the deck) */
+.icon .story { max-width: 64ch; margin: 40px auto 0; font-size: 17px; color: #d2deef; line-height: 1.78; }
+.icon .story b { color: #fff; font-weight: 600; }
+
+/* ---- shared photo / render frames (used by .concept + the NBA Lab .shot) */
+.icon .frame { margin: 0; }
+.icon .frame .win { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--line);
+  box-shadow: 0 22px 48px -28px rgba(12,35,75,.5); aspect-ratio: 4/5; background: var(--cool); display:flex; }
+.icon .frame .win img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .9s cubic-bezier(.2,.7,.2,1); }
+.icon .frame:hover .win img { transform: scale(1.045); }
+.icon .frame .win:after { content:""; position:absolute; inset:0; pointer-events:none; background: linear-gradient(to top, rgba(0,28,72,.30), transparent 42%); }
+.icon .frame .win.render { background: linear-gradient(180deg,#f3f6f9,#e2e9eb); padding: 24px 28px; align-items:center; justify-content:center; }
+.icon .frame .win.render:after { display:none; }
+.icon .frame .win.render svg { width: 100%; height: 100%; }
+.icon .ph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; padding: 24px;
+  background: repeating-linear-gradient(135deg, #e7edf3 0 14px, #e2e9ef 14px 28px); color: var(--muted); }
+.icon .ph svg { width: 34px; height: 34px; stroke: var(--accent); fill: none; stroke-width: 1.4; opacity: .8; }
+.icon .ph .pt { font-size: 12.5px; font-weight: 600; color: var(--navy); letter-spacing: .02em; }
+.icon .ph .ps { font-size: 11.5px; max-width: 26ch; line-height: 1.45; }
+.icon .cap { display: flex; gap: 10px; align-items: baseline; margin: 14px 2px 0; }
+.icon .cap .num { font-family: 'Source Serif 4', serif; font-size: 13px; color: var(--red); font-weight: 600; flex: none; }
+.icon .cap .tx { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+/* the NBA Lab photo, centered in the dark stage */
+.icon .shot { max-width: 430px; margin: 40px auto 0; }
+.icon .shot .win img { object-position: center 40%; }
+.icon .stage .cap .num { color: var(--sky); }
+.icon .stage .cap .tx { color: #aebfdb; }
+
+/* ---- TEXT BANDS (Claims / Reasoning) ----------------------------------- */
+.icon .band { padding: 70px 0; }
+.icon .band.surface { background: var(--surface); }
+.icon .band.dark { background: linear-gradient(155deg, #0C234B, #001C48); color: #fff; }
+.icon .reading { max-width: 760px; }
+.icon .btitle { font-family: 'Source Serif 4', Georgia, serif; font-weight: 600; font-size: 27px; line-height: 1.16; color: var(--navy); margin: 8px 0 0; letter-spacing: -.01em; }
+.icon .band.dark .btitle { color: #fff; }
+.icon .btitle .lab { display: block; font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; color: var(--muted); margin-bottom: 9px; }
+.icon .band.dark .btitle .lab { color: var(--sky); }
+.icon .bbody { font-size: 17px; color: var(--ink); margin: 18px 0 0; }
+.icon .band.dark .bbody { color: #d6e0ef; }
+.icon .bbody .hl { color: var(--navy); font-weight: 600; }
+.icon .band.dark .bbody .hl { color: #fff; }
+.icon .pull { margin: 22px 0 0; padding-left: 18px; border-left: 3px solid var(--red); font-style: italic; color: #eaf1fb; }
+
+/* ---- MOTION (ported 1:1 from DecaSection) ------------------------------ */
+.icon .reveal { opacity: 0; transform: translateY(28px); transition: opacity .85s cubic-bezier(.2,.7,.2,1), transform .85s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); will-change: opacity, transform; }
+.icon .reveal.in { opacity: 1; transform: none; }
+.icon .reveal.media { transform: translateY(34px) scale(.965); }
+.icon .reveal.media.in { transform: none; }
+.icon .paccent { transform: scaleX(0); transform-origin: left; transition: transform .6s ease .15s; }
+.icon .reveal.in .paccent { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .icon .reveal, .icon .paccent { opacity:1 !important; transform:none !important; transition:none !important; }
+  .icon .deck-slide { transition: none; }
+  .icon-scroll { scroll-behavior: auto; }
+}
+
+/* ---- RESPONSIVE --------------------------------------------------------- */
+@media (max-width: 860px) {
+  .icon .jerseys { grid-template-columns: 1fr; gap: 22px; max-width: 360px; margin-left: auto; margin-right: auto; }
+  .icon .h-sec { font-size: 33px; }
+  .icon .lede { font-size: 16.5px; }
+  .icon .btitle { font-size: 23px; }
+  .icon .bbody { font-size: 16px; }
+  .icon .band { padding: 52px 0; }
+  .icon .stage-in { padding: 44px 24px 50px; }
+}
