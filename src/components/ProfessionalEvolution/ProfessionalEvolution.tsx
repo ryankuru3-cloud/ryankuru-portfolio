@@ -8,10 +8,10 @@ import './ProfessionalEvolution.css'
  * panel that mounts in the Reader (see SectionBody → Reader). Markup, copy, numbers, charts,
  * and colors are unchanged; styles live in the scoped ProfessionalEvolution.css (.pe-root).
  *
- * The reference's inline <script> (scroll-progress bar, IntersectionObserver scroll-reveal,
- * count-up numbers, bar-fill grow, active dot-nav) is ported into the effect below, scoped to
- * this component's own scroll container and torn down on unmount. The prefers-reduced-motion
- * fallback matches the original exactly.
+ * The reference's inline <script> (IntersectionObserver scroll-reveal, count-up numbers,
+ * bar-fill grow, active dot-nav) is ported into the effect below, scoped to this component's
+ * own scroll container and torn down on unmount. The prefers-reduced-motion fallback matches
+ * the original exactly. (The top scroll-progress bar is now the shared one in ui/Reader.tsx.)
  *
  * Placeholder links are wired to the live site: each #portfolio link opens its Work-Portfolio
  * panel via goToSection (ICON→Jersey, Gifted→Gifted, DECA→Trophy, "Explore"→portfolio), and
@@ -20,7 +20,6 @@ import './ProfessionalEvolution.css'
 export default function ProfessionalEvolution({ content }: { content: EvolutionContent }) {
   const rootRef = useRef<HTMLDivElement>(null) // .pe-root — holds the pinned chrome
   const scrollRef = useRef<HTMLDivElement>(null) // .pe-scroll — the only scrolling element
-  const progRef = useRef<HTMLSpanElement>(null)
   const requestNav = useNavConfirmStore((s) => s.request)
 
   // Area-jump links ask for confirmation first (NavConfirm) before opening that Work-Portfolio
@@ -41,20 +40,11 @@ export default function ProfessionalEvolution({ content }: { content: EvolutionC
   useEffect(() => {
     const root = scrollRef.current
     const container = rootRef.current
-    const prog = progRef.current
     if (!root || !container) return
 
     const reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
     const rafs: number[] = []
     const timers: number[] = []
-
-    // top scroll-progress bar (relative to the scroll container, not the window)
-    const onScroll = () => {
-      const max = root.scrollHeight - root.clientHeight
-      if (prog) prog.style.width = (max > 0 ? (root.scrollTop / max) * 100 : 0) + '%'
-    }
-    root.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
 
     // count-up (numbers default to their real value in the JSX, so they show even with no JS)
     const countUp = (el: Element) => {
@@ -142,7 +132,6 @@ export default function ProfessionalEvolution({ content }: { content: EvolutionC
     }
 
     return () => {
-      root.removeEventListener('scroll', onScroll)
       io?.disconnect()
       navObs?.disconnect()
       rafs.forEach((r) => cancelAnimationFrame(r))
@@ -154,10 +143,6 @@ export default function ProfessionalEvolution({ content }: { content: EvolutionC
 
   return (
     <div className="pe-root" ref={rootRef}>
-      <div className="progress">
-        <span className="progress__fill" ref={progRef} />
-      </div>
-
       <nav className="dotnav" aria-hidden="true">
         <a href="#top" className="active" onClick={scrollToId('top')}><span>Top</span></a>
         <a href="#f01" onClick={scrollToId('f01')}><span>Core Values</span></a>
@@ -179,10 +164,12 @@ export default function ProfessionalEvolution({ content }: { content: EvolutionC
 
         {/* FINDING 01 — CORE VALUES */}
         <section className="finding" id="f01">
-          <div className="finding__num">01</div>
           <div className="wrap">
             <div className="finding__head reveal">
-              <p className="eyebrow">Core Values</p>
+              <div className="finding__header">
+                <span className="finding__num">01</span>
+                <p className="eyebrow">Core Values</p>
+              </div>
               <p className="claim">What really drives me is wanting to be the best version of myself, in all aspects of life. Since I know what I'm capable of, I raise the bar for myself higher than anyone else would. I put immense value on my self education and the things that will help set me apart. <em>That drive is exactly why the people around me can confidently put their full trust in my services.</em></p>
             </div>
 
@@ -265,10 +252,12 @@ export default function ProfessionalEvolution({ content }: { content: EvolutionC
 
         {/* FINDING 02 — COMMUNICATION STYLE */}
         <section className="finding" id="f02">
-          <div className="finding__num">02</div>
           <div className="wrap">
             <div className="finding__head reveal">
-              <p className="eyebrow">Communication Style</p>
+              <div className="finding__header">
+                <span className="finding__num">02</span>
+                <p className="eyebrow">Communication Style</p>
+              </div>
               <p className="claim">Being <em>direct and honest</em> is the core of how I communicate, but I've never believed in a one-size-fits-all delivery. My ability to read the room well and adjust how I get my message across to whoever's in front of me is my <em>differentiating factor</em> in staying credible and having people actually be receptive to any message.</p>
             </div>
 
@@ -339,10 +328,12 @@ export default function ProfessionalEvolution({ content }: { content: EvolutionC
 
         {/* FINDING 03 — COMPOSURE UNDER PRESSURE */}
         <section className="finding" id="f03">
-          <div className="finding__num">03</div>
           <div className="wrap">
             <div className="finding__head reveal">
-              <p className="eyebrow">Composure Under Pressure</p>
+              <div className="finding__header">
+                <span className="finding__num">03</span>
+                <p className="eyebrow">Composure Under Pressure</p>
+              </div>
               <p className="claim">I have the ability to perform when the pressure is on and the stakes are high. My tendency to <em>stay calm and level-headed</em> in stressful environments is what allows me to break through the noise and stand out. On top of that, I love the test — those moments help show me what I'm truly capable of, and where I'm able to learn and grow the most. Instead of shying away from the situations that make others nervous, <em>I look for them</em>.</p>
             </div>
 

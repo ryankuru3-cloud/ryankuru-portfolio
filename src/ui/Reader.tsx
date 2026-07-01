@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { SECTIONS, AREAS } from '../config/content'
 import { useReaderStore } from '../store/useReaderStore'
 import { useViewStore } from '../store/useViewStore'
@@ -15,6 +16,29 @@ export default function Reader() {
   const sectionId = useReaderStore((s) => s.section)
   const close = useReaderStore((s) => s.close)
   const isUser = useViewStore((s) => s.mode) === 'user'
+  const panelRef = useRef<HTMLDivElement>(null)
+  const barRef = useRef<HTMLDivElement>(null)
+
+  // Reading-progress bar (top of the panel): one capturing 'scroll' listener tracks whichever
+  // section's scroll container is active. Every section scrolls a descendant of the panel
+  // (.pe-scroll, .about-scroll, .deca-scroll, .icon-scroll, .gifted-scroll, the PDF pages, or
+  // the Reader's own overflow-y-auto body), and 'scroll' doesn't bubble — so we listen in the
+  // capture phase and read scrollTop/scrollHeight off the event target. Width is written to the
+  // DOM directly (no per-scroll React re-render); it resets when the open section changes.
+  useEffect(() => {
+    const panel = panelRef.current
+    const bar = barRef.current
+    if (!panel || !bar) return
+    bar.style.width = '0%'
+    const onScroll = (e: Event) => {
+      const el = e.target as HTMLElement | null
+      if (!el || el.nodeType !== 1) return
+      const max = el.scrollHeight - el.clientHeight
+      bar.style.width = (max > 0 ? (el.scrollTop / max) * 100 : 0) + '%'
+    }
+    panel.addEventListener('scroll', onScroll, { capture: true, passive: true })
+    return () => panel.removeEventListener('scroll', onScroll, true)
+  }, [sectionId])
 
   if (!sectionId || !isUser) return null
   const section = SECTIONS[sectionId]
@@ -37,9 +61,14 @@ export default function Reader() {
       onClick={close}
     >
       <div
+        ref={panelRef}
         className="reader-panel relative flex h-full w-full max-w-[1600px] flex-col overflow-hidden border border-white/12 bg-arizona/85 shadow-2xl backdrop-blur-xl"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* reading progress — driven by the capturing scroll listener in the effect above */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-40 h-[3px]">
+          <div ref={barRef} className="h-full w-0 bg-gradient-to-r from-accent to-bloom transition-[width] duration-100 ease-linear" />
+        </div>
         <Corners />
 
         {/* Chromeless panels (Professional Evolution) skip the header bar entirely; a floating
